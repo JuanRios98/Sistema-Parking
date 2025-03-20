@@ -1,6 +1,4 @@
-﻿using Microsoft.Identity.Client;
-
-namespace ParkingAPI.Models
+﻿namespace ParkingAPI.Models
 {
     public class Tarifa
     {

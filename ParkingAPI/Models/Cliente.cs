@@ -6,7 +6,7 @@
         public required string Nombre { get; set; }
         public int Identificacion { get; set; }
         public required string TipoPlan { get; set; }
-        public DateOnly? FechaInicio { get; set; }
-        public DateOnly? FechaFin { get; set; }
+        public DateTime? FechaInicio { get; set; }
+        public DateTime? FechaFin { get; set; }
     }
 }
