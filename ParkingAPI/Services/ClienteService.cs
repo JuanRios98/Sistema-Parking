@@ -15,12 +15,12 @@ namespace ParkingAPI.Services
             _clienteRepository = clienteRepository;
         }
 
-        public async Task<IEnumerable<Cliente>> GetAllClientes()
+        public async Task<IEnumerable<Cliente>> GetAllCliente()
         {
 
             try
             {
-                return await _clienteRepository.GetAll();
+                return await _clienteRepository.GetAllCliente();
 
             }
             catch (Exception ex)
@@ -29,14 +29,14 @@ namespace ParkingAPI.Services
             }
         }
 
-        public async Task<Cliente> GetClientebyId(int id)
+        public async Task<Cliente> GetbyIdCliente(int id)
         {
             if (id <= 0)
             {
                 throw new Exception("El id no puede ser menor o igual a 0");
             }
 
-            var cliente = await _clienteRepository.GetbyId(id);
+            var cliente = await _clienteRepository.GetbyIdCliente(id);
 
             if (cliente == null)
             {
@@ -48,17 +48,17 @@ namespace ParkingAPI.Services
 
         public async Task<Cliente> CreateCliente(Cliente cliente)
         {
-            return await _clienteRepository.Create(cliente);
+            return await _clienteRepository.CreateCliente(cliente);
         }
 
         public async Task<Cliente> UpdateCliente(int id, Cliente cliente)
         {
-            return await _clienteRepository.Update(id, cliente);
+            return await _clienteRepository.UpdateCliente(id, cliente);
         }
 
         public async Task<Cliente> DeleteCliente(int id)
         {
-            return await _clienteRepository.Delete(id);
+            return await _clienteRepository.DeleteCliente(id);
         }
 
     }

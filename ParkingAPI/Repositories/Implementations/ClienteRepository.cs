@@ -16,24 +16,24 @@ namespace ParkingAPI.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<IEnumerable<Cliente>> GetAll()
+        public async Task<IEnumerable<Cliente>> GetAllCliente()
         {
             return await _context.Cliente.ToListAsync();
         }
 
-        public async Task<Cliente> GetbyId(int id)
+        public async Task<Cliente> GetbyIdCliente(int id)
         {
             return await _context.Cliente.FindAsync(id);
         }
 
-        public async Task<Cliente> Create(Cliente cliente)
+        public async Task<Cliente> CreateCliente(Cliente cliente)
         {
             _context.Cliente.Add(cliente);
             await _context.SaveChangesAsync();
             return cliente;
         }
 
-        public async Task<Cliente> Update(int id, Cliente cliente)
+        public async Task<Cliente> UpdateCliente(int id, Cliente cliente)
         {
             var clientes = await _context.Cliente.FindAsync(id);
 
@@ -55,7 +55,7 @@ namespace ParkingAPI.Repositories.Implementations
 
         }
 
-        public async Task<Cliente> Delete(int id)
+        public async Task<Cliente> DeleteCliente(int id)
         {
             var cliente = await _context.Cliente.FindAsync(id);
             if (cliente == null)

@@ -32,7 +32,7 @@ namespace ParkingAPI.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al obtener la lista", ex);
+                throw new ArgumentException("Error al obtener la lista", ex);
             }
         }
 
@@ -40,12 +40,12 @@ namespace ParkingAPI.Services
         {
             if (id <= 0)
             {
-                throw new Exception("El id no puede ser menor o igual a 0");
+                throw new ArgumentException("El id no puede ser menor o igual a 0");
             }
             var celda = await _celdaRepository.GetbyId(id);
             if (celda == null)
             {
-                throw new Exception("La celda no existe");
+                throw new KeyNotFoundException("La celda no existe");
             }
             return celda;
         }
@@ -54,24 +54,24 @@ namespace ParkingAPI.Services
         {
             if (celda == null)
             {
-                throw new Exception("La celda no puede ser nula");
+                throw new ArgumentException("La celda no puede ser nula");
             }
 
             if (string.IsNullOrWhiteSpace(celda.Codigo))
             {
-                throw new Exception("El codigo de celda no puede estar vacio y contener espacios");
+                throw new ArgumentException("El codigo de celda no puede estar vacio y contener espacios");
             }
 
             celda.Codigo = celda.Codigo.Trim();
 
             if (!Regex.IsMatch(celda.Codigo, @"^[A-Za-z0-9]{2,10}$"))
             {
-                throw new Exception("El codigo debe tener solo letras y numeros, sin caracteres especiales");
+                throw new ArgumentException("El codigo debe tener solo letras y numeros, sin caracteres especiales");
             }
 
             if (!ValidarTipoVehiculo(celda.Tipo))
             {
-                throw new Exception("El tipo de vehiculo solo puede ser moto o carro");
+                throw new ArgumentException("El tipo de vehiculo solo puede ser moto o carro");
             }
 
             var celdasE = await _celdaRepository.GetbyId(celda.Id);
@@ -122,14 +122,23 @@ namespace ParkingAPI.Services
 
         public async Task<Celda> DeleteCelda(int id)
         {
-           
+            if (id <= 0)
+            {
+                throw new ArgumentException("El id no puede ser menor o igual a 0");
+            }
+            var tarifa = await _celdaRepository.GetbyId(id);
+            if (tarifa == null)
+            {
+                throw new KeyNotFoundException("La tarifa no fue encontrada");
+            }
+
             try
             {
                 return await _celdaRepository.Delete(id);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar la celda", ex);
+                throw new KeyNotFoundException("Error al eliminar la celda", ex);
             }
         }
     }

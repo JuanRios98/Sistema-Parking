@@ -6,10 +6,11 @@ namespace ParkingAPI.Repositories.Interfaces
 {
     public interface IVehiculoRepository
     {
-        Task<IEnumerable<Vehiculo>> GetAll();
-        Task<Vehiculo> GetById(int id);
-        Task<Vehiculo> Create(Vehiculo vehiculo);
-        Task<Vehiculo> Update(Vehiculo vehiculo);
+        Task<IEnumerable<Vehiculo>> GetAllVehiculo();
+        Task<Vehiculo> GetbyIdVehiculo(int id);
+        Task<Vehiculo> CreateVehiculo(Vehiculo vehiculo);
+        Task<Vehiculo> UpdateVehiculo(int id,Vehiculo vehiculo);
+        Task<Vehiculo> DeleteVehiculo(int id);
 
     }
 }

@@ -4,6 +4,8 @@ using ParkingAPI.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
+
 namespace ParkingAPI.Controllers
 {
     [Route("api/cliente")]
@@ -23,7 +25,7 @@ namespace ParkingAPI.Controllers
         {
             try
             {
-                var clientes = await _clienteService.GetAllClientes();
+                var clientes = await _clienteService.GetAllCliente();
                 return Ok(clientes);
 
 
@@ -40,7 +42,7 @@ namespace ParkingAPI.Controllers
         {
             try
             {
-                var cliente = await _clienteService.GetClientebyId(id);
+                var cliente = await _clienteService.GetbyIdCliente(id);
                 return Ok(cliente);
             }
             catch (KeyNotFoundException ex)

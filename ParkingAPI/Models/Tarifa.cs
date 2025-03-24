@@ -7,7 +7,7 @@
         public string VehiculoTipo { get; set; }
         public int Monto { get; set; }
        
-        public DateTime FechaActualizacíon { get; set; }
+        public DateTime FechaActualizacion { get; set; }
 
 
 
