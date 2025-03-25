@@ -1,47 +1,41 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ParkingAPI.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using ParkingAPI.Services;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using ParkingAPI.Models;
 
 
 namespace ParkingAPI.Controllers
 {
-    [Route("api/tarifa")]
+    [Route("api/parking")]
     [ApiController]
-    public class TarifaController : ControllerBase
-
-
+    public class ParkingController : ControllerBase
     {
-        private readonly TarifaService _tarifaService;
-
-        public TarifaController(TarifaService tarifaService)
+        private readonly ParkingService _parkingService;
+        public ParkingController(ParkingService parkingService)
         {
-            _tarifaService = tarifaService;
+            _parkingService = parkingService;
         }
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tarifa>>> GetAllTarifa()
+        public async Task<ActionResult<IEnumerable<Parking>>> GetAllParking()
         {
             try
             {
-                var tarifas = await _tarifaService.GetAllTarifa();
-                return Ok(tarifas);
+                var parkings = await _parkingService.GetAllParking();
+                return Ok(parkings);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { mensaje = "Ocurrio un error interno", error = ex.Message });
             }
         }
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tarifa>> GetbyId(int id)
+        public async Task<ActionResult<Parking>> GetbyId(int id)
         {
             try
             {
-                var tarifa = await _tarifaService.GetbyIdTarifa(id);
-                return Ok(tarifa);
+                var parking = await _parkingService.GetbyIdParking(id);
+                return Ok(parking);
             }
             catch (KeyNotFoundException ex)
             {
@@ -56,14 +50,13 @@ namespace ParkingAPI.Controllers
                 return StatusCode(500, new { mensaje = "Ocurrio un error interno", error = ex.Message });
             }
         }
-
         [HttpPost]
-        public async Task<ActionResult<Tarifa>> CreateTarifa([FromBody] Tarifa tarifa)
+        public async Task<ActionResult<Parking>> CreateParking(Parking parking)
         {
             try
             {
-                var tarifaCreada = await _tarifaService.CreateTarifa(tarifa);
-                return CreatedAtAction(nameof(GetbyId), new { id = tarifaCreada.Id }, tarifaCreada);
+                var newParking = await _parkingService.CreateParking(parking);
+                return CreatedAtAction(nameof(GetbyId), new { id = newParking.Id }, newParking);
             }
             catch (ArgumentException ex)
             {
@@ -74,18 +67,13 @@ namespace ParkingAPI.Controllers
                 return StatusCode(500, new { mensaje = "Ocurrio un error interno", error = ex.Message });
             }
         }
-
         [HttpPut("{id}")]
-        public async Task<ActionResult<Tarifa>> UpdateTarifa(int id, [FromBody] Tarifa tarifa)
+        public async Task<ActionResult<Parking>> UpdateParking(int id, Parking parking)
         {
             try
             {
-                var tarifaActualizada = await _tarifaService.UpdateTarifa(id, tarifa);
-                return Ok(tarifaActualizada);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { mensaje = ex.Message });
+                var updatedParking = await _parkingService.UpdateParking(id, parking);
+                return Ok(updatedParking);
             }
             catch (ArgumentException ex)
             {
@@ -96,14 +84,13 @@ namespace ParkingAPI.Controllers
                 return StatusCode(500, new { mensaje = "Ocurrio un error interno", error = ex.Message });
             }
         }
-
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTarifa(int id)
+        public async Task<ActionResult<Parking>> DeleteParking(int id)
         {
             try
             {
-                await _tarifaService.DeleteTarifa(id);
-                return NoContent();
+                return await _parkingService.DeleteParking(id);
+               
             }
             catch (KeyNotFoundException ex)
             {
@@ -118,7 +105,5 @@ namespace ParkingAPI.Controllers
                 return StatusCode(500, new { mensaje = "Ocurrio un error interno", error = ex.Message });
             }
         }
-
-
-    }
+    } 
 }

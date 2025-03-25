@@ -3,10 +3,9 @@
     public class Tarifa
     {
         public int Id { get; set; }
-        public string Tipo { get; set; }
-        public string VehiculoTipo { get; set; }
+        public required string Tipo { get; set; }
+        public required string VehiculoTipo { get; set; }
         public int Monto { get; set; }
-       
         public DateTime FechaActualizacion { get; set; }
 
 

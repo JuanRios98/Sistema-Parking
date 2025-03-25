@@ -6,10 +6,10 @@ namespace ParkingAPI.Repositories.Interfaces
 {
     public interface IPagoRepository
     {
-        Task<IEnumerable<Pago>> GetAll();
-        Task<Pago> GetById(int id);
-        Task<Pago> Create(Pago pago);
-        Task<Pago> Update(Pago pago);
-        Task<Pago> Delete(int id);
+        Task<IEnumerable<Pago>> GetAllPago();
+        Task<Pago> GetbyIdPago(int id);
+        Task<Pago> CreatePago(Pago pago);
+        Task<Pago> UpdatePago(int id,Pago pago);
+        Task<Pago> DeletePago(int id);
     }
 }

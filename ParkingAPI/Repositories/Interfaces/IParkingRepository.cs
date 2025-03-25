@@ -6,10 +6,10 @@ namespace ParkingAPI.Repositories.Interfaces
 {
     public interface IParkingRepository
     {
-        Task<IEnumerable<Parking>> GetAll();
-        Task<Parking> GetbyId(int id);
-        Task<Parking> Create(Parking parking);
-        Task<Parking> Update(Parking parking);
-        Task<Parking> Delete(int id);
+        Task<IEnumerable<Parking>> GetAllParking();
+        Task<Parking> GetbyIdParking(int id);
+        Task<Parking> CreateParking(Parking parking);
+        Task<Parking> UpdateParking(int id, Parking parking);
+        Task<Parking> DeleteParking(int id);
     }
 }

@@ -9,7 +9,6 @@ namespace ParkingAPI.Models
         public int? ClienteId { get; set; }
         public int Monto { get; set; }
 
-        public Cliente? Cliente { get; set; }
-        public Parking? Parking { get; set; }
+ 
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ParkingAPI.Repositories.Implementations;
 using ParkingAPI.Repositories.Interfaces;
 using ParkingAPI.Services;
-using ParkingAPI.Repositories.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,14 +24,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ICeldaRepository, CeldaRepository>();
 builder.Services.AddScoped<IVehiculoRepository, VehiculoRepository>();
+builder.Services.AddScoped<IPagoRepository, PagoRepository>();
+builder.Services.AddScoped<IParkingRepository, ParkingRepository>();
 builder.Services.AddScoped<ITarifaRepository, TarifaRepository>();
+
 
 // Inyeccion Servicios
 
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<CeldaService>();
-builder.Services.AddScoped<TarifaService>();
 builder.Services.AddScoped<VehiculoService>();
+builder.Services.AddScoped<PagoService>();
+builder.Services.AddScoped<ParkingService>();
+builder.Services.AddScoped<TarifaService>();
 
 //Conexion a la base de datos
 builder.Services.AddDbContext<ApplicationDbContext>

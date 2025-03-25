@@ -1,33 +1,35 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ParkingAPI.Models;
+﻿using ParkingAPI.Models;
 using ParkingAPI.Services;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using ParkingAPI.Repositories.Interfaces;
+using System;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 
 
 namespace ParkingAPI.Controllers
 {
-    [Route("api/tarifa")]
+
+    [Route("api/pago")]
     [ApiController]
-    public class TarifaController : ControllerBase
 
-
+    public class PagoController : ControllerBase
     {
-        private readonly TarifaService _tarifaService;
+        private readonly PagoService _pagoService;
 
-        public TarifaController(TarifaService tarifaService)
+        public PagoController(PagoService pagoService)
         {
-            _tarifaService = tarifaService;
+            _pagoService = pagoService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tarifa>>> GetAllTarifa()
+        public async Task<ActionResult<IEnumerable<Pago>>> GetAllPago()
         {
             try
             {
-                var tarifas = await _tarifaService.GetAllTarifa();
-                return Ok(tarifas);
+                var pagos = await _pagoService.GetAllPago();
+                return Ok(pagos);
             }
             catch (Exception ex)
             {
@@ -36,12 +38,12 @@ namespace ParkingAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tarifa>> GetbyId(int id)
+        public async Task<ActionResult<Pago>> GetbyIdPago(int id)
         {
             try
             {
-                var tarifa = await _tarifaService.GetbyIdTarifa(id);
-                return Ok(tarifa);
+                var pago = await _pagoService.GetbyIdPago(id);
+                return Ok(pago);
             }
             catch (KeyNotFoundException ex)
             {
@@ -58,12 +60,12 @@ namespace ParkingAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Tarifa>> CreateTarifa([FromBody] Tarifa tarifa)
+        public async Task<ActionResult<Pago>> CreatePago(Pago pago)
         {
             try
             {
-                var tarifaCreada = await _tarifaService.CreateTarifa(tarifa);
-                return CreatedAtAction(nameof(GetbyId), new { id = tarifaCreada.Id }, tarifaCreada);
+                var newPago = await _pagoService.CreatePago(pago);
+                return CreatedAtAction(nameof(GetbyIdPago), new { id = newPago.Id }, newPago);
             }
             catch (ArgumentException ex)
             {
@@ -76,12 +78,12 @@ namespace ParkingAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Tarifa>> UpdateTarifa(int id, [FromBody] Tarifa tarifa)
+        public async Task<ActionResult<Pago>> UpdatePago(int id, Pago pago)
         {
             try
             {
-                var tarifaActualizada = await _tarifaService.UpdateTarifa(id, tarifa);
-                return Ok(tarifaActualizada);
+                var PagoU = await _pagoService.UpdatePago(id, pago);
+                return Ok(PagoU);
             }
             catch (KeyNotFoundException ex)
             {
@@ -98,12 +100,12 @@ namespace ParkingAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTarifa(int id)
+        public async Task<ActionResult<Pago>> DeletePago(int id)
         {
             try
             {
-                await _tarifaService.DeleteTarifa(id);
-                return NoContent();
+                var pago = await _pagoService.DeletePago(id);
+                return Ok(pago);
             }
             catch (KeyNotFoundException ex)
             {
@@ -118,7 +120,5 @@ namespace ParkingAPI.Controllers
                 return StatusCode(500, new { mensaje = "Ocurrio un error interno", error = ex.Message });
             }
         }
-
-
     }
 }
